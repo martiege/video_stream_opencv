@@ -1,6 +1,6 @@
 # Slight fix of the official video_stream_opencv package
 
-Fixes a small bug in the official package, which gives you errors after a video file is finished, and also hinders looping the video. Also includes a launch file to convert video files to a rosbag. It records both compressed and uncompressed images. Try: 
+Fixes a small bug in the official package, which gives you errors after a video file is finished, and also hinders looping the video. Also includes a launch file to convert video files to a `rosbag`. It records both compressed and uncompressed images. Try: 
 
     roslaunch video_stream_opencv video_file_to_bag.launch videofile_path:=/path/to/video rosbag_path:=/path/to/record/rosbag
 
@@ -9,6 +9,11 @@ Or, as a specific example:
     roslaunch video_stream_opencv video_file_to_bag.launch videofile_path:="~/git/video_stream_opencv/test/small.mp4" rosbag_path:="~/git/video_stream_opencv/test/output.bag"
 
 Other parameters can also be added or changed, see the rest of this readme. This will still work with webcams and the other formats covered by this package, but this specific launch file is designed especially for using videofiles. 
+
+Another addition to this package is the `images_to_video.py` executable. It takes in a path to a directory with images (sequentially named, as they are sorted before compiled into a video). Only mp4 is supported in the code. If you want this to look pretty, install `tqdm`. Default it will assume the images are .png's and using 30 fps, but these can be set: 
+
+    rosrun video_stream_opencv images_to_video "/path/to/images/" "/path/to/output.mp4" 
+    rosrun video_stream_opencv images_to_video "/path/to/images/" ".jpg" "/path/to/output.mp4" 10 
 
 # video_stream_opencv  ![](https://travis-ci.com/ros-drivers/video_stream_opencv.svg?branch=master)
 
