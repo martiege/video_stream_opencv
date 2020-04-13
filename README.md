@@ -1,3 +1,15 @@
+# Slight fix of the official video_stream_opencv package
+
+Fixes a small bug in the official package, which gives you errors after a video file is finished, and also hinders looping the video. Also includes a launch file to convert video files to a rosbag. It records both compressed and uncompressed images. Try: 
+
+    roslaunch video_stream_opencv video_file_to_bag.launch videofile_path:=/path/to/video rosbag_path:=/path/to/record/rosbag
+
+Or, as a specific example: 
+
+    roslaunch video_stream_opencv video_file_to_bag.launch videofile_path:="~/git/video_stream_opencv/test/small.mp4" rosbag_path:="~/git/video_stream_opencv/test/output.bag"
+
+Other parameters can also be added or changed, see the rest of this readme. 
+
 # video_stream_opencv  ![](https://travis-ci.com/ros-drivers/video_stream_opencv.svg?branch=master)
 
 A package to view video streams based on the [OpenCV VideoCapture module](http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture), easy way to publish on a ROS Image topic (including camera info) usb cams, ethernet cameras, video streams or video files. It also supports flipping of images and fps throttling.

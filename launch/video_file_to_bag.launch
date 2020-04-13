@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<launch>
+   <!-- videofile path -->
+   <arg name="videofile_path" default="$(find video_stream_opencv)/test/small.mp4" /> 
+   <!-- rosbag path -->
+   <arg name="rosbag_path" default="$(find video_stream_opencv)/test/output.bag" />
+   <!-- launch video stream -->
+   <include file="$(find video_stream_opencv)/launch/camera.launch" >
+        <!-- node name and ros graph name -->
+        <arg name="camera_name" value="pg_17274483" />
+        <!-- full path to the video file -->
+        <arg name="video_stream_provider" value="$(arg videofile_path)" />
+        <!-- set camera fps to (video files not affected) -->
+        <!-- <arg name="set_camera_fps" value="30"/> -->
+        <!-- set buffer queue size of frame capturing to -->
+        <arg name="buffer_queue_size" value="1000" />
+        <!-- throttling the querying of frames to -->
+        <arg name="fps" value="30" />
+        <!-- setting frame_id -->
+        <arg name="frame_id" value="frame" />
+        <!-- enable looping playback -->
+        <arg name="loop_videofile" value="false" />
+        <!-- start frame of video -->
+        <arg name="start_frame" default="0"/>
+        <!-- stop frame of video, -1 means the end of video -->
+        <arg name="stop_frame" default="-1"/>
+        <!-- visualize on an image_view window the stream generated -->
+        <arg name="visualize" value="false" />
+   </include>
+   <!-- launch rosbag, only record compressed images -->
+   <node pkg="rosbag" type="record" name="recorder" output="screen" args="-O $(arg rosbag_path) /pg_17274483/image_raw/compressed /pg_17274483/image_raw"/>
+</launch>
