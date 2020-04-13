@@ -8,7 +8,7 @@ Or, as a specific example:
 
     roslaunch video_stream_opencv video_file_to_bag.launch videofile_path:="~/git/video_stream_opencv/test/small.mp4" rosbag_path:="~/git/video_stream_opencv/test/output.bag"
 
-Other parameters can also be added or changed, see the rest of this readme. 
+Other parameters can also be added or changed, see the rest of this readme. This will still work with webcams and the other formats covered by this package, but this specific launch file is designed especially for using videofiles. 
 
 # video_stream_opencv  ![](https://travis-ci.com/ros-drivers/video_stream_opencv.svg?branch=master)
 
