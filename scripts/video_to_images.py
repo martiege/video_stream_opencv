@@ -19,25 +19,44 @@ import cv2
 import sys
 import argparse
 
-def orbSLAM(output_path, image_folder, timestamp_file, video_path, file_type, start_frame = 0, end_frame = -1, fps = 30.0, start_time = 0.0, verbose = False):
+
+def video_to_images(output_path, image_folder, timestamp_file, video_path, file_type, start_frame = 0, end_frame = -1, fps = 30.0, start_time = 0.0, verbose = False):
     vidcap = cv2.VideoCapture(video_path)
     vidcap.set(2, start_frame)
     success,image = vidcap.read()
     count = 0
+    if verbose: 
+        print 'Output path ' + output_path
+        print 'Image folder ' + image_folder 
+        print 'Timestamp file ' + timestamp_file
+        print 'Video path ' + video_path 
+        print 'File type ' + file_type 
+        print 'Start frame ' + str(start_frame)
+        print 'End frame ' + str(end_frame)
+        print 'FPS ' + str(fps)
+        print '\n'
 
     f = open(output_path + timestamp_file, 'w+')
     if verbose:
         print 'File opened'
     f.write('# timestamp filename\n')   
     if not os.path.exists(output_path + image_folder):
+        if verbose:
+            print 'Creating image directory'
         os.makedirs(output_path + image_folder)
+    else:
+        if verbose:
+            print 'Image directory already existed'
     
     for element in os.listdir(output_path + image_folder):
+        if verbose: 
+            print 'Removing existing file: ' + element
         os.remove(os.path.join(output_path + image_folder, element))
  
     while success:
-        image_path = output_path  + image_folder + '/frame%d' + file_type % count
-
+        image_path = output_path  + image_folder + '/frame' + str(count) + file_type
+        if verbose: 
+            print 'Current image path: ' + image_path
         timestamp = start_time + count/fps 
 
         f.write(str(timestamp) + ' ' + image_path + '\n')
@@ -91,10 +110,20 @@ if __name__ == "__main__":
     if out_path[-1] != '/':
         out_path += '/'
     vid_path = vid_path.strip()
-    if vid_path[-1] != '/':
-        vid_path += '/'
+    if vid_path[-4:] != '.mp4':
+        print 'Only .mp4 files allowed! This is ' + vid_path[-4:]
+        exit(0)
     file_type = file_type.strip()
     if file_type[0] != ".":
         file_type = "." + file_type
+    ts_file = ts_file.strip()
+    if ts_file[-4:] != ".txt":
+        ts_file += ".txt"
+    if s_time < 0.0: 
+        s_time = 0.0
+    if s_frame < 0: 
+        s_frame = 0 
+    if e_frame < 0:
+        e_frame = -1
 
-    orbSLAM(out_path, img_folder, ts_file, vid_path, file_type, s_frame, e_frame, fps, s_time, verbose)
+    video_to_images(out_path, img_folder, ts_file, vid_path, file_type, s_frame, e_frame, fps, s_time, verbose)
