@@ -18,10 +18,11 @@ list of all the paths are compiled into a video.
 import cv2
 import sys
 import glob 
+import argparse
 try:
-    from tqdm import tqdm1
+    from tqdm import tqdm
 except:
-    print("Problems getting tqdm, is it installed?")
+    print "Problems getting tqdm, is it installed? Try it for nice progressbar :)" 
     class tqdm:
         # Dummy tqdm class
         def __init__(self, iterable=None, desc=None, total=None, leave=True, file=None, ncols=None, mininterval=0.1, maxinterval=10.0, miniters=None, ascii=None, disable=False, unit='it', unit_scale=False, dynamic_ncols=False, smoothing=0.3, bar_format=None, initial=0, position=None, postfix=None, unit_divisor=1000, write_bytes=None, lock_args=None, nrows=None, gui=False, **kwargs):
@@ -66,36 +67,37 @@ def dataset_to_video(image_path, file_type, video_path, fps):
 
 
 if __name__ == "__main__":
-    print "\n"
-    if len(sys.argv) == 3: 
-        print "Two arguments given, assuming that the image file type is .png and fps is 30"
-        img_path, vid_path = sys.argv[1:]
-        file_type = ".png"
-        fps = 30
+    parser = argparse.ArgumentParser(description="Converting a directory of image sequences into a video")
+    parser.add_argument("--fps", default=30.0, help="The desired FPS (frames per second) of the output video")
+    parser.add_argument("-f", "--file_type", default=".png", help="The filetype of the input images")
+    parser.add_argument("--verbose", default=False, help="Print some useful information")
 
-    elif len(sys.argv) == 5: 
-        print "Four arguments given"
-        img_path, file_type, vid_path, fps = sys.argv[1:]
-        fps = int(fps)
-    else: 
-        print "Needs at least 2 arguments, image_path and video_path. In this case the image file type is assumed .png"
-        print "Four arguments can be used, image_path, file_type, video_path, fps"
-        print "The image_path argument is the path to the directory containing all the images"
-        exit(0)
-    
+    requiredNamed = parser.add_argument_group('required named arguments')
+    requiredNamed.add_argument("-i", "--image_path", required=True, help="The path of the directory where the directory of images are placed")
+    requiredNamed.add_argument("-v", "--video_path",  required=True, help="The path of the video file")
+
+    args = parser.parse_args()
+
+    img_path = args.image_path 
+    vid_path = args.video_path 
+    verbose  = args.verbose
+    f_type   = args.file_type
+    fps      = args.fps 
+
     img_path = img_path.strip()
     if img_path[-1] != '/':
         img_path += '/'
-    file_type = file_type.strip()
-    if file_type[0] != ".":
-        file_type = "." + file_type
-    print "Images taken from:"
-    print " " + img_path 
-    print "Image file type is: " + file_type
-    print "Video stored as:"
-    print " " + vid_path 
-    print "Using %i fps" % (fps)
-    print "\n"
+    f_type = f_type.strip()
+    if f_type[0] != ".":
+        f_type = "." + f_type
+    if verbose:
+        print "Images taken from:"
+        print " " + img_path 
+        print "Image file type is: " + f_type
+        print "Video stored as:"
+        print " " + vid_path 
+        print "Using %i fps" % (fps)
+        print "\n"
 
-    print "Converting dataset to video"
-    dataset_to_video(img_path, file_type, vid_path, fps)
+        print "Converting dataset to video"
+    dataset_to_video(img_path, f_type, vid_path, fps)

@@ -9,7 +9,6 @@ Created on 4/13/20
 
 @author: Amund Fjøsne and Martin Eek Gerhardsen
 
-TODO
 images_to_video.py contains
 code to convert a video into a directory of image sequences.
 """
@@ -73,9 +72,6 @@ def video_to_images(output_path, image_folder, timestamp_file, video_path, file_
 
     if verbose:
         print 'File closed'
-
-
-
 
 
 if __name__ == "__main__":
