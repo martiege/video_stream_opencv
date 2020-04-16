@@ -70,7 +70,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Converting a directory of image sequences into a video")
     parser.add_argument("--fps", default=30.0, help="The desired FPS (frames per second) of the output video")
     parser.add_argument("-f", "--file_type", default=".png", help="The filetype of the input images")
-    parser.add_argument("--verbose", default=False, help="Print some useful information")
+    parser.add_argument("--verbose", action='store_true', help="Print some useful information")
 
     requiredNamed = parser.add_argument_group('required named arguments')
     requiredNamed.add_argument("-i", "--image_path", required=True, help="The path of the directory where the directory of images are placed")

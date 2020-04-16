@@ -83,7 +83,7 @@ if __name__ == "__main__":
     parser.add_argument("--fps", default=30.0, help="The desired FPS (frames per second) of the input video (to give correct timestamps)")
     parser.add_argument("-f", "--file_type", default=".png", help="The filetype of the output images")
     parser.add_argument("-S", "--start_time", default=0.0, help="The starting time for the image sequence (useful if you need a specific starting time for the timestamps)")
-    parser.add_argument("--verbose", default=False, help="Print some useful information")
+    parser.add_argument("--verbose", action='store_true', help="Print some useful information")
 
     requiredNamed = parser.add_argument_group('required named arguments')
     requiredNamed.add_argument("-o", "--output_path", required=True, help="The path of the directory where the timestamps and directory of images are placed")
