@@ -10,10 +10,14 @@ Or, as a specific example:
 
 Other parameters can also be added or changed, see the rest of this readme. This will still work with webcams and the other formats covered by this package, but this specific launch file is designed especially for using videofiles. 
 
-Another addition to this package is the `images_to_video.py` executable. It takes in a path to a directory with images (sequentially named, as they are sorted before compiled into a video). Only mp4 is supported in the code. If you want this to look pretty, install `tqdm`. Default it will assume the images are .png's and using 30 fps, but these can be set: 
+# New scripts
+Another addition to this package is the scripts `images_to_video.py`, `video_to_images.py` and `images_calibration.py`. `images_to_video.py` combines a directory of images into a video file. `video_to_images.py` converts a video file into a directory of images and a timestamp file. `images_calibration.py` uses a directory of images to generate calibration parameters. 
 
-    rosrun video_stream_opencv images_to_video "/path/to/images/" "/path/to/output.mp4" 
-    rosrun video_stream_opencv images_to_video "/path/to/images/" ".jpg" "/path/to/output.mp4" 10 
+To find the required and optional arguments for each function: 
+
+    rosrun video_stream_opencv images_to_video.py --help
+    rosrun video_stream_opencv video_to_images.py --help
+    rosrun video_stream_opencv images_calibration.py --help
 
 # video_stream_opencv  ![](https://travis-ci.com/ros-drivers/video_stream_opencv.svg?branch=master)
 

@@ -13,6 +13,9 @@ images_to_video.py contains
 code to convert a directory of image sequences into a video.
 images are assumed to be named sequentially, such that a sorted 
 list of all the paths are compiled into a video. 
+
+For the future, possible implement using the timestamp file 
+instead of glob to find the images? 
 """
 
 import cv2
