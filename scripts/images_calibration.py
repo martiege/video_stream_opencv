@@ -43,7 +43,7 @@ except:
                     print ""
             pass 
 
-def calibrate(image_path, file_type, n_c = (7,6), verbose=False):
+def calibrate(image_path, file_type, n_c = (7,6), verbose=False, visualise=False):
     # termination criteria
     criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
     # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
@@ -56,6 +56,8 @@ def calibrate(image_path, file_type, n_c = (7,6), verbose=False):
     image_count = 0
     image_used_count = 0
 
+    if verbose:
+        print "Number of images " + str(len(images))
     with tqdm(total=len(images), desc="Calibrating") as pbar:
         for fname in images:
             img = cv.imread(fname)
@@ -72,7 +74,7 @@ def calibrate(image_path, file_type, n_c = (7,6), verbose=False):
                 corners2 = cv.cornerSubPix(gray,corners, (11,11), (-1,-1), criteria)
                 imgpoints.append(corners)
                 # Draw and display the corners
-                if verbose:
+                if visualise:
                     cv.drawChessboardCorners(img, n_c, corners2, ret)
                     cv.imshow('img', img)
                     cv.waitKey(500)
@@ -124,6 +126,7 @@ def calibrate(image_path, file_type, n_c = (7,6), verbose=False):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Using images from a specified folder to calibrate. Very basic calibration implementation. ")
     parser.add_argument("--verbose", action='store_true', help="Print some useful information")
+    parser.add_argument("--visualise", action='store_true', help="Show the images used during the calibration")
     parser.add_argument("-f", "--file_type", default=".png", help="The filetype of the input images")
 
     requiredNamed = parser.add_argument_group('required named arguments')
@@ -132,6 +135,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     verbose    = args.verbose 
+    visualise  = args.visualise
     file_type  = args.file_type 
     img_path   = args.image_path 
     cb_corners = tuple(int(x) for x in args.chessboard_corners)
@@ -142,4 +146,4 @@ if __name__ == "__main__":
         print "cb_corners: " + str(cb_corners)
 
     # "/home/martin/video_stream_opencv/test/rgb/"
-    M, v = calibrate(img_path, file_type, cb_corners, verbose=verbose)
+    M, v = calibrate(img_path, file_type, cb_corners, verbose=verbose, visualise=visualise)
