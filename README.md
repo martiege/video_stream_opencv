@@ -1,14 +1,6 @@
 # Slight fix of the official video_stream_opencv package
 
-Fixes a small bug in the official package, which gives you errors after a video file is finished, and also hinders looping the video. Also includes a launch file to convert video files to a `rosbag`. It records both compressed and uncompressed images. Try: 
-
-    roslaunch video_stream_opencv video_file_to_bag.launch videofile_path:=/path/to/video rosbag_path:=/path/to/record/rosbag
-
-Or, as a specific example: 
-
-    roslaunch video_stream_opencv video_file_to_bag.launch videofile_path:="~/git/video_stream_opencv/test/small.mp4" rosbag_path:="~/git/video_stream_opencv/test/output.bag"
-
-Other parameters can also be added or changed, see the rest of this readme. This will still work with webcams and the other formats covered by this package, but this specific launch file is designed especially for using videofiles. 
+Fixes a small bug in the official package, which gives you errors after a video file is finished, and also hinders looping the video. 
 
 # New scripts
 Another addition to this package is the scripts `images_to_video.py`, `video_to_images.py` and `images_calibration.py`. `images_to_video.py` combines a directory of images into a video file. `video_to_images.py` converts a video file into a directory of images and a timestamp file. `images_calibration.py` uses a directory of images to generate calibration parameters. 
@@ -18,6 +10,11 @@ To find the required and optional arguments for each function:
     rosrun video_stream_opencv images_to_video.py --help
     rosrun video_stream_opencv video_to_images.py --help
     rosrun video_stream_opencv images_calibration.py --help
+
+# New launch files
+Several new launch files designed specially for the `orb_slam_2_ros` and `tagslam` packages. `video_file_orbslam2.launch` and `video_file_tagslam.launch` are for publishing a video file (primarily .mp4 supported) to the topics expected by both of those packages. Parameter values for `fps`, `video_stream_provider`, `camera_info_url` and `visualize` can be specified, see the rest of this README for more info concerning these parameters. Similarly, to record a video file to a rosbag, the `video_file_to_bag_orbslam2.launch` and `video_file_to_bag_tagslam.launch` launch files are created. Parameter values for `video_stream_provider`, `rosbag_path`, `fps`, `camera_info_url` and `visualize` can be chosen. 
+
+Note that even though several launch files have been added, these have generally been used for testing, and therefore should generally be re-written for any future projects. See `camera.launch` for the base launch file. 
 
 # video_stream_opencv  ![](https://travis-ci.com/ros-drivers/video_stream_opencv.svg?branch=master)
 

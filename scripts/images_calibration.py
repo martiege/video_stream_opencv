@@ -126,7 +126,7 @@ def calibrate(image_path, file_type, n_c = (7,6), verbose=False, visualise=False
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Using images from a specified folder to calibrate. Very basic calibration implementation. ")
     parser.add_argument("--verbose", action='store_true', help="Print some useful information")
-    parser.add_argument("--visualise", action='store_true', help="Show the images used during the calibration")
+    parser.add_argument("--visualize", action='store_true', help="Show the images used during the calibration")
     parser.add_argument("-f", "--file_type", default=".png", help="The filetype of the input images")
 
     requiredNamed = parser.add_argument_group('required named arguments')
@@ -135,7 +135,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     verbose    = args.verbose 
-    visualise  = args.visualise
+    visualise  = args.visualize
     file_type  = args.file_type 
     img_path   = args.image_path 
     cb_corners = tuple(int(x) for x in args.chessboard_corners)
